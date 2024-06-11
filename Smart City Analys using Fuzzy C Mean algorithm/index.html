@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Congestion FCM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 8px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 12px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Traffic Congestion Clustering using FCM Algorithm</h1>
+</header>
+
+<main>
+    <form id="csvForm" enctype="multipart/form-data">
+        <label for="csvFile">Upload CSV File:</label>
+        <input type="file" id="csvFile" name="csvFile" accept=".csv">
+
+        <button type="button" onclick="submitForm()">Process CSV</button>
+    </form>
+
+    <div id="output"></div>
+</main>
+
+<script>
+    async function submitForm() {
+        const formData = new FormData(document.getElementById('csvForm'));
+
+        // Assuming your Flask server is running on localhost:5000
+        const response = await fetch('http://localhost:5000/process_csv', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        document.getElementById('output').innerText = result.output;
+    }
+</script>
+
+</body>
+</html>
